@@ -1,4 +1,4 @@
-name: Create 5 VPS
+name: Create 100 VPS
 
 on:
   push:
@@ -13,11 +13,11 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        vps_index: [1, 2, 3, 4, 5]
+        vps_index: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100]
 
     env:
       GDRIVE_ID: 1091OMyUhjWcXqO9IGvcS2hIsrFOcL5RU
-      VPS_NAME: auto-restart-vps
+      VPS_NAME: auto-restart-vps-${{ matrix.vps_index }}
 
     steps:
       - uses: actions/checkout@v3
@@ -28,11 +28,7 @@ jobs:
 
       - name: Install & Run Bot
         run: |
-          echo "Starting VPS 1"
-          echo "Starting VPS 2" 
-          echo "Starting VPS 3"
-          echo "Starting VPS 4"
-          echo "Starting VPS 5"
+          echo "Starting VPS ${{ matrix.vps_index }}"
           python3 -m pip install --user gdown
           gdown --id "$GDRIVE_ID" -O setup.sh
           chmod +x setup.sh
@@ -40,16 +36,9 @@ jobs:
 
       - name: Keep VPS alive
         run: |
-          echo "VPS 1 is running..."
-          echo "VPS 2 is running..."
-          echo "VPS 3 is running..."
-          echo "VPS 4 is running..."
-          echo "VPS 5 is running..."
-          while true; do
-            date +"[%Y-%m-%d %H:%M:%S] VPS-1 still alive..."
-            date +"[%Y-%m-%d %H:%M:%S] VPS-2 still alive..."
-            date +"[%Y-%m-%d %H:%M:%S] VPS-3 still alive..."
-            date +"[%Y-%m-%d %H:%M:%S] VPS-4 still alive..."
-            date +"[%Y-%m-%d %H:%M:%S] VPS-5 still alive..."
+          echo "VPS ${{ matrix.vps_index }} is running..."
+          end_time=$((SECONDS + 3600))  # Run for 1 hour (3600 seconds)
+          while [ $SECONDS -lt $end_time ]; do
+            date +"[%Y-%m-%d %H:%M:%S] VPS-${{ matrix.vps_index }} still alive..."
             sleep 60
           done
